@@ -16,7 +16,19 @@
 #define RTC_ERR_FLAG_MASK      0x0FF0
 
 //Evening doesn't exist in Gen 2
-#if OW_TIMES_OF_DAY == GEN_2
+#if OW_TIMES_OF_DAY == CUSTOM_GEN
+    #define MORNING_HOUR_BEGIN 6
+    #define MORNING_HOUR_END   10
+
+    #define DAY_HOUR_BEGIN     10
+    #define DAY_HOUR_END       18
+
+    #define EVENING_HOUR_BEGIN 18
+    #define EVENING_HOUR_END   22
+
+    #define NIGHT_HOUR_BEGIN   22
+    #define NIGHT_HOUR_END     6
+#elif OW_TIMES_OF_DAY == GEN_2
     #define MORNING_HOUR_BEGIN 4
     #define MORNING_HOUR_END   10
 
@@ -80,7 +92,7 @@
 
     #define NIGHT_HOUR_BEGIN   18
     #define NIGHT_HOUR_END     6
-#elif OW_TIMES_OF_DAY >= GEN_8
+#elif OW_TIMES_OF_DAY >= GEN_8 || OW_TIMES_OF_DAY < CUSTOM_GEN
     #define MORNING_HOUR_BEGIN 6
     #define MORNING_HOUR_END   10
 

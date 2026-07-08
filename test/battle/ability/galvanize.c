@@ -43,17 +43,13 @@ SINGLE_BATTLE_TEST("Galvanize can not turn certain moves into Electric type move
     }
 }
 
-SINGLE_BATTLE_TEST("Galvanize boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6)", s16 damage)
+SINGLE_BATTLE_TEST("Galvanize boosts power of affected moves by 30%", s16 damage)
 {
     enum Ability ability;
-    u32 genConfig;
-    PARAMETRIZE { ability = ABILITY_STURDY;     genConfig = GEN_7; }
-    PARAMETRIZE { ability = ABILITY_STURDY;     genConfig = GEN_6; }
-    PARAMETRIZE { ability = ABILITY_GALVANIZE;  genConfig = GEN_7; }
-    PARAMETRIZE { ability = ABILITY_GALVANIZE;  genConfig = GEN_6; }
+    PARAMETRIZE { ability = ABILITY_STURDY; }
+    PARAMETRIZE { ability = ABILITY_GALVANIZE; }
 
     GIVEN {
-        WITH_CONFIG(B_ATE_MULTIPLIER, genConfig);
         PLAYER(SPECIES_GEODUDE_ALOLA) { Ability(ability); Moves(MOVE_TACKLE); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -61,10 +57,7 @@ SINGLE_BATTLE_TEST("Galvanize boosts power of affected moves by 20% (Gen7+) or 3
     } SCENE {
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } FINALLY {
-        if (genConfig >= GEN_7)
-            EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.8), results[2].damage); // STAB + ate
-        else
-            EXPECT_MUL_EQ(results[1].damage, Q_4_12(1.95), results[3].damage); // STAB + ate
+        EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.95), results[1].damage); // STAB + ate
     }
 }
 

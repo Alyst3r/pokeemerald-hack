@@ -279,6 +279,8 @@ enum EvolutionConditions {
     IF_ATK_EQ_DEF,                      // The Pokémon's Attack is equal to its Defense stat.
     IF_ATK_LT_DEF,                      // The Pokémon's Attack is lower than its Defense stat.
     IF_HOLD_ITEM,                       // The Pokémon is holding a specific item.
+    // custom gen 2
+    IF_NOT_HOLD_ITEM,                   // The pokemon is not holding a specific item.
     // Gen 3
     IF_PID_UPPER_MODULO_10_GT,          // The Pokémon's upper personality value's modulo by 10 is greater than the defined value.
     IF_PID_UPPER_MODULO_10_EQ,          // The Pokémon's upper personality value's modulo by 10 is equal to the defined value.

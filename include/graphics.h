@@ -3438,4 +3438,8 @@ extern const u16 gBattleIcons_Pal2[];
 extern const u32 gGhostFrontPic[];
 extern const u16 gGhostPalette[];
 
+// custom
+extern const u32 gItemIcon_OldStatue[];
+extern const u16 gItemIconPalette_OldStatue[];
+
 #endif //GUARD_GRAPHICS_H

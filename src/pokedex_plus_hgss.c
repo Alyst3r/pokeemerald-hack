@@ -6608,6 +6608,18 @@ static void PrintEvolutionTargetSpeciesAndMethod(u8 taskId, enum Species species
                     case TIME_NIGHT:   StringAppend(gStringVar4, COMPOUND_STRING("Day"));         break; // More intuitive than "NOT Night"
                     }
                     break;
+                case IF_NOT_HOLD_ITEM:
+                    StringAppend(gStringVar4, COMPOUND_STRING("NOT holding "));
+                    if (isAlcremie && IsItemSweet(evolutions[i].params[j].arg1))
+                    {
+                        StringAppend(gStringVar4, COMPOUND_STRING("Sweet")); //item
+                    }
+                    else
+                    {
+                        CopyItemName(evolutions[i].params[j].arg1, gStringVar2); //item
+                        StringAppend(gStringVar4, gStringVar2);
+                    }
+                    break;
                 case IF_HOLD_ITEM:
                     StringAppend(gStringVar4, COMPOUND_STRING("holds "));
                     if (isAlcremie && IsItemSweet(evolutions[i].params[j].arg1))

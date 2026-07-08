@@ -21,14 +21,11 @@ SINGLE_BATTLE_TEST("Refrigerate turns a Normal-type move into a Ice-type move")
     }
 }
 
-SINGLE_BATTLE_TEST("Refrigerate boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6)", s16 damage)
+SINGLE_BATTLE_TEST("Refrigerate boosts power of affected moves by 30%", s16 damage)
 {
     enum Ability ability;
-    u32 genConfig;
-    PARAMETRIZE { ability = ABILITY_SNOW_WARNING;   genConfig = GEN_7; }
-    PARAMETRIZE { ability = ABILITY_SNOW_WARNING;   genConfig = GEN_6; }
-    PARAMETRIZE { ability = ABILITY_REFRIGERATE;    genConfig = GEN_7; }
-    PARAMETRIZE { ability = ABILITY_REFRIGERATE;    genConfig = GEN_6; }
+    PARAMETRIZE { ability = ABILITY_SNOW_WARNING; }
+    PARAMETRIZE { ability = ABILITY_REFRIGERATE; }
 
     GIVEN {
         WITH_CONFIG(B_ATE_MULTIPLIER, genConfig);
@@ -39,10 +36,7 @@ SINGLE_BATTLE_TEST("Refrigerate boosts power of affected moves by 20% (Gen7+) or
     } SCENE {
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } FINALLY {
-        if (genConfig >= GEN_7)
-            EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.8), results[2].damage); // STAB + ate
-        else
-            EXPECT_MUL_EQ(results[1].damage, Q_4_12(1.95), results[3].damage); // STAB + ate
+        EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.95), results[1].damage); // STAB + ate
     }
 }
 

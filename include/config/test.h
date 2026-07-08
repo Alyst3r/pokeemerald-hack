@@ -1106,8 +1106,6 @@
 #define P_FAMILY_IRON_LEAVES             TRUE
 #undef P_FAMILY_POLTCHAGEIST
 #define P_FAMILY_POLTCHAGEIST            TRUE
-#undef P_FAMILY_SINISTCHA
-#define P_FAMILY_SINISTCHA               TRUE
 #undef P_FAMILY_OKIDOGI
 #define P_FAMILY_OKIDOGI                 TRUE
 #undef P_FAMILY_MUNKIDORI

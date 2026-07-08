@@ -46,17 +46,13 @@ SINGLE_BATTLE_TEST("Aerilate can not turn certain moves into Flying type moves")
     }
 }
 
-SINGLE_BATTLE_TEST("Aerilate boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6)", s16 damage)
+SINGLE_BATTLE_TEST("Aerilate boosts power of affected moves by 30%", s16 damage)
 {
     enum Move move;
-    u32 genConfig;
-    PARAMETRIZE { move = MOVE_CELEBRATE;   genConfig = GEN_7; }
-    PARAMETRIZE { move = MOVE_CELEBRATE;   genConfig = GEN_6; }
-    PARAMETRIZE { move = MOVE_SKILL_SWAP;  genConfig = GEN_7; }
-    PARAMETRIZE { move = MOVE_SKILL_SWAP;  genConfig = GEN_6; }
+    PARAMETRIZE { move = MOVE_CELEBRATE; }
+    PARAMETRIZE { move = MOVE_SKILL_SWAP; }
 
     GIVEN {
-        WITH_CONFIG(B_ATE_MULTIPLIER, genConfig);
         ASSUME(GetMoveType(MOVE_TACKLE) == TYPE_NORMAL);
         ASSUME(GetMoveEffect(MOVE_SKILL_SWAP) == EFFECT_SKILL_SWAP);
         PLAYER(SPECIES_WOBBUFFET);
@@ -66,10 +62,7 @@ SINGLE_BATTLE_TEST("Aerilate boosts power of affected moves by 20% (Gen7+) or 30
     } SCENE {
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } FINALLY {
-        if (genConfig >= GEN_7)
-            EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.2), results[2].damage); // No STAB
-        else
-            EXPECT_MUL_EQ(results[1].damage, Q_4_12(1.3), results[3].damage); // No STAB
+        EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.3), results[1].damage); // No STAB
     }
 }
 

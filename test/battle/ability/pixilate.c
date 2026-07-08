@@ -22,17 +22,13 @@ SINGLE_BATTLE_TEST("Pixilate turns a Normal-type move into a Fairy-type move")
     }
 }
 
-SINGLE_BATTLE_TEST("Pixilate boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6)", s16 damage)
+SINGLE_BATTLE_TEST("Pixilate boosts power of affected moves by 30%", s16 damage)
 {
     enum Ability ability;
-    u32 genConfig;
-    PARAMETRIZE { ability = ABILITY_CUTE_CHARM;     genConfig = GEN_7; }
-    PARAMETRIZE { ability = ABILITY_CUTE_CHARM;     genConfig = GEN_6; }
-    PARAMETRIZE { ability = ABILITY_PIXILATE;       genConfig = GEN_7; }
-    PARAMETRIZE { ability = ABILITY_PIXILATE;       genConfig = GEN_6; }
+    PARAMETRIZE { ability = ABILITY_CUTE_CHARM; }
+    PARAMETRIZE { ability = ABILITY_PIXILATE; }
 
     GIVEN {
-        WITH_CONFIG(B_ATE_MULTIPLIER, genConfig);
         PLAYER(SPECIES_SYLVEON) { Ability(ability); Moves(MOVE_TACKLE); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -40,10 +36,7 @@ SINGLE_BATTLE_TEST("Pixilate boosts power of affected moves by 20% (Gen7+) or 30
     } SCENE {
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } FINALLY {
-        if (genConfig >= GEN_7)
-            EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.8), results[2].damage); // STAB + ate
-        else
-            EXPECT_MUL_EQ(results[1].damage, Q_4_12(1.95), results[3].damage); // STAB + ate
+            EXPECT_MUL_EQ(results[0].damage, Q_4_12(1.95), results[1].damage); // STAB + ate
     }
 }
 
